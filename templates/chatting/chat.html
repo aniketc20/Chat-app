@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% if request.user.is_authenticated %}
+<nav class="my-2 my-md-0 mr-md-0">
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Welcome, {{user.username}}</h5>
+    <a class="p-2 text-dark" href="{% url 'logout' %}">Logout</a>
+</div>
+
+</nav>
+{% else %}
+<nav class="my-2 my-md-0 mr-md-3">
+
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+        <h1 class="my-0 mr-md-auto font-weight-normal"></h1>
+     <a class="btn btn-outline-primary" href="{% url 'register' %}">Sign up</a>
+        <a class="p-2 text-dark" href="{% url 'login' %}">Login</a>
+</div>
+</nav>
+
+{% endif %}
+What chat room would you like to enter/create chat room?<br/>
+
+    <input id="room-name-input" type="text" size="100"/><br/>
+    <input id="room-name-submit" type="button" value="Enter"/>
+{% if request.user.is_authenticated %}
+{% for room in rooms %}
+    <a href="http://127.0.0.1:8000/chat/{{room.room}}"><h3>{{room.room}}</h3></a>
+    {% endfor %}
+{% endif %}
+</body>
+<script>
+        {% for room in rooms %}
+        console.log('{{room.room}}');
+        {% endfor %}
+        var Name = "{{ user.username }}";
+        myHeading = document.querySelector('h2');
+        console.log(Name);
+        document.querySelector('#room-name-input').focus();
+        document.querySelector('#room-name-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#room-name-submit').click();
+            }
+        };
+
+        document.querySelector('#room-name-submit').onclick = function(e) {
+            var roomName = document.querySelector('#room-name-input').value;
+            if (roomName=='')
+            {
+             alert('Enter a chat room!');
+             window.location.pathname = '';
+            }
+            else if (Name=='')
+            {
+             window.location.pathname = '/' + 'login' + '/';
+            }
+            else
+            {
+             window.location.pathname = '/chat/' + roomName + '/';
+            };
+
+}
+    </script>
+</html>
