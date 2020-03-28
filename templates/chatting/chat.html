@@ -9,8 +9,9 @@
 {% if request.user.is_authenticated %}
 <nav class="my-2 my-md-0 mr-md-0">
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-    <h5 class="my-0 mr-md-auto font-weight-normal">Welcome, {{user.username}}</h5>
-    <a class="p-2 text-dark" href="{% url 'logout' %}">Logout</a>
+
+    <h5 class="my-0 mr-md-auto font-weight-normal">Welcome, {{user.username}} <a class="p-2 text-dark" href="{% url 'logout' %}">Logout</a></h5>
+
 </div>
 
 </nav>
@@ -30,6 +31,7 @@ What chat room would you like to enter/create chat room?<br/>
     <input id="room-name-input" type="text" size="100"/><br/>
     <input id="room-name-submit" type="button" value="Enter"/>
 {% if request.user.is_authenticated %}
+<h4>All chat rooms:</h4>
 {% for room in rooms %}
     <a href="http://127.0.0.1:8000/chat/{{room.room}}"><h3>{{room.room}}</h3></a>
     {% endfor %}
